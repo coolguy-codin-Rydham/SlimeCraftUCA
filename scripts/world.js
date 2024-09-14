@@ -139,13 +139,11 @@ export class World extends THREE.Group {
       for (let y = 0; y < this.size.height; y++) {
         for (let z = 0; z < this.size.width; z++) {
           const blockId = this.getBlock(x, y, z).id;
-          console.log(blockId);
           if(blockId === blocks.empty.id){
             continue;
           }
 
           const mesh = meshes[blockId];
-          console.log(mesh);
 
           const instanceId = mesh.count;
           if (blockId !== blocks.empty.id && !this.isBlockObscured(x, y, z)) {

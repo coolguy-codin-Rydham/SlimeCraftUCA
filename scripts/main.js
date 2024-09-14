@@ -3,6 +3,7 @@ import {OrbitControls} from "three/addons/controls/OrbitControls.js"
 import Stats from "three/examples/jsm/libs/stats.module.js"
 import { World } from "./world.js";
 import { createUI } from "./ui.js";
+import { Player } from "./player.js";
 
 
 const stats = new Stats();
@@ -17,10 +18,10 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
 //Camera Setup
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight);
-camera.position.set(-32, 16, -32);
+const orbitCamera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight);
+orbitCamera.position.set(-32, 16, -32);
 
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(orbitCamera, renderer.domElement);
 controls.target.set(16, 0, 16)
 controls.update();
 //Scene Setup
@@ -30,6 +31,8 @@ const world = new World();
 world.generate();
 
 scene.add(world);
+
+const player = new Player(scene);
 
 function setupLights(){
     const sun = new THREE.DirectionalLight();
@@ -45,8 +48,8 @@ function setupLights(){
     sun.shadow.mapSize = new THREE.Vector2(512, 512);
     scene.add(sun);
 
-    const shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
-    scene.add(shadowHelper);
+    // const shadowHelper = new THREE.CameraHelper(sun.shadow.camera);
+    // scene.add(shadowHelper);
 
     const ambient = new THREE.DirectionalLight();
     ambient.intensity=0.1;
@@ -55,20 +58,29 @@ function setupLights(){
 
 
 //Render Loop
+
+let previousTime = performance.now()
 function animate() {
+    let currentTime = performance.now()
+    const dt = (currentTime-previousTime)/1000
     requestAnimationFrame(animate);
-    renderer.render(scene, camera);
+    player.applyInput(dt);
+    renderer.render(scene, player.controls.isLocked ? player.camera : orbitCamera);
     stats.update();
+
+    previousTime = currentTime
 }
 
 window.addEventListener('resize', ()=>{
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
+    orbitCamera.aspect = window.innerWidth/window.innerHeight;
+    orbitCamera.updateProjectionMatrix();
+    player.camera.aspect = window.innerWidth/window.innerHeight;
+    player.camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 })
 
 
 setupLights();
-createUI(world);
+createUI(world,player);
 animate();
 

@@ -2,9 +2,15 @@ import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
 
 export class Player {
-  maxSpeed = 40;
+  radius = 0.5
+  height = 1.75
+  jumpSpeed = 10;
+  onGround = false;
+  maxSpeed = 20;
   input = new THREE.Vector3();
   velocity = new THREE.Vector3();
+
+  #worldVelocity = new THREE.Vector3();
   camera = new THREE.PerspectiveCamera(
     70,
     window.innerWidth / window.innerHeight,
@@ -25,6 +31,26 @@ export class Player {
     scene.add(this.cameraHelper);
     document.addEventListener("keydown", this.onkeydown.bind(this));
     document.addEventListener("keyup", this.onkeyup.bind(this));
+
+    this.boundsHelper = new THREE.Mesh(
+      new THREE.CylinderGeometry(this.radius, this.radius, this.height, 16),
+      new THREE.MeshBasicMaterial({wireframe: true})
+    )
+    scene.add(this.boundsHelper);
+  }
+
+  get worldVelocity(){
+    this.#worldVelocity.copy(this.velocity);
+    this.#worldVelocity.applyEuler(new THREE.Euler(0, this.camera.rotation.y, 0));
+    return this.#worldVelocity;
+  }
+
+  /**
+     * @param {THREE.Vector3} deltaVelocity
+   */
+  applyWorldDeltaVelocity(deltaVelocity) {
+    deltaVelocity.applyEuler(new THREE.Euler(0, -this.camera.rotation.y, 0));
+    this.velocity.add(deltaVelocity);
   }
 
   applyInput(dt) {
@@ -35,10 +61,16 @@ export class Player {
       this.controls.moveRight(this.velocity.x * dt);
       this.controls.moveForward(this.velocity.z * dt);
 
-      this.camera.position.y += this.input.y * dt;
+      this.position.y += this.velocity.y * dt;
+
 
       document.getElementById("player-position").textContent = this.toString();
     }
+  }
+
+  updateBoundsHelper(){
+    this.boundsHelper.position.copy(this.position);
+    this.boundsHelper.position.y -=this.height/2;
   }
 
   /**
@@ -71,16 +103,14 @@ export class Player {
       case "KeyD":
         this.input.x = this.maxSpeed;
         break;
-      case "Space":
-        this.input.y = this.maxSpeed;
-        break;
-      case "ShiftLeft":
-        this.input.y = -this.maxSpeed;
-        break;
       case "KeyR":
         this.position.set(32, 16, 32);
         this.velocity.set(0, 0, 0);
         break;
+      case "Space":
+        if(this.onGround){
+          this.velocity.y += this.jumpSpeed;
+        }
     }
   }
 
@@ -100,12 +130,6 @@ export class Player {
         break;
       case "KeyD":
         this.input.x = 0;
-        break;
-      case "Space":
-        this.input.y = 0;
-        break;
-      case "ShiftLeft":
-        this.input.y = 0;
         break;
     }
   }

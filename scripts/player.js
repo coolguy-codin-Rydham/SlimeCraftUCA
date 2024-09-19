@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
 
+const CENTER_SCREEN = new THREE.Vector2();
+
 export class Player {
   radius = 0.5
   height = 1.75
@@ -20,6 +22,9 @@ export class Player {
   controls = new PointerLockControls(this.camera, document.body);
   cameraHelper = new THREE.CameraHelper(this.camera);
 
+  raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(), 0, 3);
+  selectedCoords = null;
+
   /**
    *
    * @param {THREE.Scene} scene
@@ -28,7 +33,7 @@ export class Player {
   constructor(scene) {
     this.position.set(32, 16, 32);
     scene.add(this.camera);
-    scene.add(this.cameraHelper);
+    // scene.add(this.cameraHelper);
     document.addEventListener("keydown", this.onkeydown.bind(this));
     document.addEventListener("keyup", this.onkeyup.bind(this));
 
@@ -36,13 +41,54 @@ export class Player {
       new THREE.CylinderGeometry(this.radius, this.radius, this.height, 16),
       new THREE.MeshBasicMaterial({wireframe: true})
     )
-    scene.add(this.boundsHelper);
+    // scene.add(this.boundsHelper);
+
+    const selectionMaterial = new THREE.MeshBasicMaterial({color: "white", transparent: true, opacity: 0.5})
+    const selectionGeometry = new THREE.BoxGeometry(1.01, 1.01, 1.01)
+    this.selectionHelper = new THREE.Mesh(selectionGeometry, selectionMaterial)
+    scene.add(this.selectionHelper)
   }
 
   get worldVelocity(){
     this.#worldVelocity.copy(this.velocity);
     this.#worldVelocity.applyEuler(new THREE.Euler(0, this.camera.rotation.y, 0));
     return this.#worldVelocity;
+  }
+
+  /**
+   * @param {World} world
+   */
+
+  update(world){
+    this.updateRaycaster(world);
+  }
+
+  /**
+   * @param {World} world
+   */
+
+  updateRaycaster(world){
+    this.raycaster.setFromCamera(CENTER_SCREEN, this.camera)
+    const intersections = this.raycaster.intersectObject(world, true)
+    if(intersections.length>0){
+      const intersection = intersections[0]
+
+      const chunk = intersection.object.parent
+
+      const blockMatrix = new THREE.Matrix4();
+      intersection.object.getMatrixAt(intersection.instanceId, blockMatrix)
+      this.selectedCoords = chunk.position.clone()
+      this.selectedCoords.applyMatrix4(blockMatrix)
+      
+
+      this.selectionHelper.position.copy(this.selectedCoords)
+      this.selectionHelper.visible = true
+
+      console.log(this.selectedCoords)
+    }else{
+      this.selectedCoords= null
+      this.selectionHelper.visible = false
+    }
   }
 
   /**

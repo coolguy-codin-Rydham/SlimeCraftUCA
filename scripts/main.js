@@ -67,6 +67,19 @@ function setupLights(){
 
 let previousTime = performance.now()
 
+function onMouseDown(event){
+    if(player.controls.isLocked && player.selectedCoords){
+        console.log(`Removing Block ar ${JSON.stringify(player.selectedCoords)}`);
+        world.removeBlock(
+            player.selectedCoords.x,
+            player.selectedCoords.y,
+            player.selectedCoords.z
+        )
+    }
+
+}
+
+document.addEventListener("mousedown", onMouseDown)
 
 function animate() {
     let currentTime = performance.now()

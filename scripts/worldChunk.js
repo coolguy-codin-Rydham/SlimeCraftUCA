@@ -127,7 +127,7 @@ export class WorldChunk extends THREE.Group {
       .filter((block) => block.id !== blocks.empty.id)
       .forEach((block) => {
         const mesh = new THREE.InstancedMesh(geometry, block.material, maxCount);
-        mesh.name = block.name;
+        mesh.name = block.id;
         mesh.count = 0;
         mesh.castShadow = true;
         mesh.receiveShadow = true;
@@ -191,6 +191,50 @@ export class WorldChunk extends THREE.Group {
     } else {
       return null;
     }
+  }
+
+  /**
+   * @param {number}x
+   * @param {number}y
+   * @param {number}z
+   */
+  removeBlock(x, y, z){
+    const block = this.getBlock(x, y, z);
+    if(block && block.id !== blocks.empty.id){
+      this.deleteBlockInstance(x, y, z);
+    }
+  }
+
+  /**
+   * @param {number}x
+   * @param {number}y
+   * @param {number}z
+   */
+  deleteBlockInstance(x, y, z){
+    const block = this.getBlock(x, y, z);
+    if(block.instanceId===null){
+      return ;
+    }
+    const mesh = this.children.find((instanceMesh)=>{
+      return (
+        instanceMesh.name === block.id
+      )
+    })
+
+    const instanceId = block.instanceId;
+
+    const lastMatrix = new THREE.Matrix4();
+    mesh.getMatrixAt(mesh.count-1, lastMatrix);
+    const v  = new THREE.Vector3();
+    v.applyMatrix4(lastMatrix);
+    this.setBlockInstanceId(v.x, v.y, v.z, instanceId);
+
+    mesh.setMatrixAt(instanceId, lastMatrix);
+    mesh.count--;
+    mesh.instanceMatrix.needsUpdate = true;
+    mesh.computeBoundingSphere();
+    this.setBlockInstanceId(x, y, z, null);
+    this.setBlockId(x, y, z, blocks.empty.id);
   }
 
   /**

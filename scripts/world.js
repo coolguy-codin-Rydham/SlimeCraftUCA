@@ -9,11 +9,13 @@ export class World extends THREE.Group {
 
   chunkSize = { width: 32, height: 32 };
 
+  noFog = false;
+
   params = {
     seed: 0,
     terrain: {
-      scale: 70,
-      magnitude: 0.5,
+      scale: 40,
+      magnitude: 0.4,
       offset: 0.2,
     },
   };

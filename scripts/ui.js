@@ -19,6 +19,8 @@ export function createUI(scene, world, player){
     terrainFolder.add(world.params.terrain, 'scale', 10, 100).name('Scale');
     terrainFolder.add(world.params.terrain, 'magnitude', 0, 1).name('Magnitude');
     terrainFolder.add(world.params.terrain, 'offset',0, 1).name('Offset');
+    terrainFolder.add(world.chunkSize, 'width', 1, 256).step(1).name('Chunk Width');
+    terrainFolder.add(world.chunkSize, 'height', 1, 256).step(1).name('Chunk Height')
 
 
     const allResources = gui.addFolder("Resources")

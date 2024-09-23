@@ -7,13 +7,13 @@ export class World extends THREE.Group {
 
   drawDistance = 2;
 
-  chunkSize = { width: 16, height: 16 };
+  chunkSize = { width: 32, height: 32 };
 
   params = {
     seed: 0,
     terrain: {
       scale: 70,
-      magnitude: 0.1,
+      magnitude: 0.5,
       offset: 0.2,
     },
   };

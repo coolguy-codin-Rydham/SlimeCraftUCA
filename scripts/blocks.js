@@ -11,12 +11,12 @@ const loadTexture = (path) => {
 };
 
 const textures = {
-    dirt: loadTexture("/dirt.png"),
-    grass: loadTexture("/grass_carried.png"),
-    grassSide: loadTexture("/grass_side_carried.png"),
-    stone: loadTexture("/stone.png"),
-    coalOre: loadTexture("/coal_ore.png"),
-    ironOre: loadTexture("/iron_ore.png"),
+    dirt: loadTexture("/textures/dirt.png"),
+    grass: loadTexture("/textures/grass_carried.png"),
+    grassSide: loadTexture("/textures/grass_side_carried.png"),
+    stone: loadTexture("/textures/stone.png"),
+    coalOre: loadTexture("/textures/coal_ore.png"),
+    ironOre: loadTexture("/textures/iron_ore.png"),
 }
 
 export const blocks = {

@@ -11,7 +11,7 @@ const loadTexture = (path) => {
 };
 
 const textures = {
-    dirt: loadTexture("/coal_ore.png"),
+    dirt: loadTexture("/dirt.png"),
     grass: loadTexture("/grass_carried.png"),
     grassSide: loadTexture("/grass_side_carried.png"),
     stone: loadTexture("/stone.png"),

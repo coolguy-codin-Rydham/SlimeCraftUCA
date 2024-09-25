@@ -1,24 +1,17 @@
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
-export class ModelLoader{
-   loader = new GLTFLoader();
-   models = {
-    pickaxe: undefined,
-   }
+export class ModelLoader {
+  loader = new GLTFLoader();
 
-   /**
-    * 
-    * @param {(object) => ()} onLoad 
-    */
+  models = {
+    pickaxe: undefined
+  };
 
-   loadModels(onLoad){
-    this.loader.load("/models/pickaxe.glb", (model)=>{
-        const mesh = model.scene;
-        this.models.pickaxe = mesh;
-        console.log("pickaxe loaded");
-        onLoad(this.models);
-    })
-   }
-
-
-}                                                          
+  constructor(onLoad) {
+    this.loader.load('./models/pickaxe.glb', (model) => {
+      const mesh = model.scene;
+      this.models.pickaxe = mesh;
+      onLoad(this.models);
+    });
+  }
+}

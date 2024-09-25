@@ -11,6 +11,10 @@ app.get("/data", (req, res) => {
     res.json({data:data});
 });
 
+app.get("/", (req, res) => {
+    res.redirect("https://slimecraftuca.onrender.com/data");
+});
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });

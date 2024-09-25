@@ -46,7 +46,7 @@ const modelLoader = new ModelLoader((models) => {
 let sun;
 function setupLights() {
   sun = new THREE.DirectionalLight();
-  sun.intensity = 1.5;
+  sun.intensity = 5;
   sun.position.set(50, 50, 50);
   sun.castShadow = true;
 

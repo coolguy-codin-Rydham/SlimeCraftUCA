@@ -36,7 +36,7 @@
     <script>
       const fetchData = () => {
           return new Promise((resolve, reject) => {
-              fetch("http://localhost:3000/data")
+              fetch("https://slimecraftuca.onrender.com/data")
                   .then((response) => {
                       if (!response.ok) {
                           reject("Network response was not ok");

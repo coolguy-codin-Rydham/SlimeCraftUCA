@@ -33,9 +33,20 @@ This Project is now complete and I must is great.
    ```
    or
    ```
-   yarn install
+   bun install
    ```
 
 ### Running the Development Server
 
 To start the development server:
+
+```
+npm run dev
+```
+
+or
+
+```
+bun run dev
+```
+

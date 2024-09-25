@@ -13,7 +13,7 @@ SlimeCraft is a unique take on the block-building genre, inspired by Minecraft b
 
 ## Development Status
 
-This project is currently in active development. Key milestones and features are being tracked and implemented regularly.
+This Project is now complete and I must is great.
 
 ## Getting Started
 

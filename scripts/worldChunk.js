@@ -259,7 +259,7 @@ export class WorldChunk extends THREE.Group {
 
   generateWater() {
     const material = new THREE.MeshLambertMaterial({
-      color: 0x9090e0,
+      color: 0x00aaff,
       transparent: true,
       opacity: 0.5,
       side: THREE.DoubleSide

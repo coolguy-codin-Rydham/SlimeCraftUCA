@@ -8,7 +8,7 @@ const CENTER_SCREEN = new THREE.Vector2();
 export class Player {
   height = 1.75;
   radius = 0.5;
-  maxSpeed = 5;
+  maxSpeed = 10;
 
   jumpSpeed = 10;
   sprinting = false;

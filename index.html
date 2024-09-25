@@ -10,41 +10,63 @@
 </head>
 
 <body>
-  <div id="app"></div>
-  <div id="info">
-    <div id="info-player-position"></div>
-  </div>
-  <div id="toolbar-container">
-    <div id="toolbar">
-      <img class="toolbar-icon" id="toolbar-1" src="textures/grass.png"></img>
-      <img class="toolbar-icon" id="toolbar-2" src="textures/dirt.png"></img>
-      <img class="toolbar-icon" id="toolbar-3" src="textures/stone.png"></img>
-      <img class="toolbar-icon" id="toolbar-4" src="textures/coal_ore.png"></img>
-      <img class="toolbar-icon" id="toolbar-5" src="textures/iron_ore.png"></img>
-      <img class="toolbar-icon" id="toolbar-6" src="textures/tree_top.png"></img>
-      <img class="toolbar-icon" id="toolbar-7" src="textures/leaves.png"></img>
-      <img class="toolbar-icon" id="toolbar-8" src="textures/sand.png"></img>
-      <img class="toolbar-icon selected" id="toolbar-0" src="textures/pickaxe.png"></img>
+    <div id="app"></div>
+    <div id="info">
+      <div id="info-player-position"></div>
     </div>
-  </div>
-  <div id="overlay">
-    <div id="instructions">
-      <h1>SLIMECRAFT</h1>
-      WASD - Move<br>
-      SHIFT - Sprint<br>
-      SPACE - Jump<br>
-      R - Reset Camera<br>
-      U - Toggle UI
-      0 - Pickaxe<br>
-      1-8 - Select Block<br>
-      F1 - Save Game<br>
-      F2 - Load Game<br>
-      F10 - Debug Camera<br><br>
-      <h2>PRESS ANY KEY TO START</h2>
+    <div id="toolbar-container">
+      <div id="toolbar">
+        <img class="toolbar-icon" id="toolbar-1" src="textures/grass.png"></img>
+        <img class="toolbar-icon" id="toolbar-2" src="textures/dirt.png"></img>
+        <img class="toolbar-icon" id="toolbar-3" src="textures/stone.png"></img>
+        <img class="toolbar-icon" id="toolbar-4" src="textures/coal_ore.png"></img>
+        <img class="toolbar-icon" id="toolbar-5" src="textures/iron_ore.png"></img>
+        <img class="toolbar-icon" id="toolbar-6" src="textures/tree_top.png"></img>
+        <img class="toolbar-icon" id="toolbar-7" src="textures/leaves.png"></img>
+        <img class="toolbar-icon" id="toolbar-8" src="textures/sand.png"></img>
+        <img class="toolbar-icon selected" id="toolbar-0" src="textures/pickaxe.png"></img>
+      </div>
     </div>
-  </div>
-  <div id="status"></div>
-  <script type="module" src="./scripts/main.js"></script>
+    <div id="overlay">
+      <div id="instructions">
+        
+      </div>
+    </div>
+    <div id="status"></div>
+    <script>
+      const fetchData = () => {
+          return new Promise((resolve, reject) => {
+              fetch("http://localhost:3000/data")
+                  .then((response) => {
+                      if (!response.ok) {
+                          reject("Network response was not ok");
+                      }
+                      return response.json();
+                  })
+                  .then((result) => {
+                      resolve(result.data);
+                  })
+                  .catch((error) => {
+                      reject("Fetch error: " + error);
+                  });
+          });
+      };
+
+      console.log("Fetching data...");
+      
+      fetchData()
+          .then((data) => {
+              console.log(data);
+              document.getElementById("instructions").innerHTML = data;
+          })
+          .catch((error) => {
+              console.error("Error:", error);
+              document.getElementById("instructions").innerHTML = "Failed to load instructions.";
+          });
+    </script>
+
+
+    <script type="module" src="./scripts/main.js"></script>
 </body>
 
 </html>

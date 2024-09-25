@@ -17,13 +17,14 @@ export function createUI(scene, world, player){
     terrainFolder.add(world, 'drawDistance', 1, 10).name('Draw Distance');
     terrainFolder.add(world.params, 'seed', 1, 10000).name('Seed');
     terrainFolder.add(world.params.terrain, 'scale', 10, 100).name('Scale');
-    terrainFolder.add(world.params.terrain, 'magnitude', 0, 1).name('Magnitude');
-    terrainFolder.add(world.params.terrain, 'offset',0, 1).name('Offset');
+    terrainFolder.add(world.params.terrain, 'magnitude', 0, 32, 1).name('Magnitude');
+    terrainFolder.add(world.params.terrain, 'offset',0, 32, 1).name('Offset');
     terrainFolder.add(world.chunkSize, 'width', 1, 256).step(1).name('Chunk Width');
     terrainFolder.add(world.chunkSize, 'height', 1, 256).step(1).name('Chunk Height')
+    terrainFolder.add(world.params.terrain, 'waterOffset', 0, 32, 1).name('Water Offset');
 
 
-    const allResources = gui.addFolder("Resources")
+    const allResources = terrainFolder.addFolder("Resources")
     resources.forEach((resource)=>{
         const resourcesFolder = allResources.addFolder(resource.name)
         resourcesFolder.add(resource, 'scarcity', 0, 1).name('Scarcity');
@@ -33,6 +34,18 @@ export function createUI(scene, world, player){
         scaleFolder.add(resource.scale, 'y', 1, 100).name('Y Scale');
         scaleFolder.add(resource.scale, 'z', 1, 100).name('Z Scale');
     })
+
+    const treeFolder = terrainFolder.addFolder('Trees').close();
+    treeFolder.add(world.params.trees, 'frequency', 0, 0.1).name('Frequency');
+    treeFolder.add(world.params.trees.trunk, 'minHeight', 0, 10, 1).name('Min Trunk Height');
+    treeFolder.add(world.params.trees.trunk, 'maxHeight', 0, 10, 1).name('Max Trunk Height');
+    treeFolder.add(world.params.trees.canopy, 'minRadius', 0, 10, 1).name('Min Canopy Size');
+    treeFolder.add(world.params.trees.canopy, 'maxRadius', 0, 10, 1).name('Max Canopy Size');
+    treeFolder.add(world.params.trees.canopy, 'density', 0, 10, 1).name('Canopy Density');
+
+    const cloudFolder = terrainFolder.addFolder('Clouds').close();
+    cloudFolder.add(world.params.clouds, 'scale', 0, 100).name('Cloud Size');
+    cloudFolder.add(world.params.clouds, 'density', 0, 1).name('Cloud Density');
 
     
     // gui.add(world, 'generate')

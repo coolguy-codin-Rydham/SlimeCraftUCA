@@ -7,7 +7,7 @@ export class World extends THREE.Group {
 
   drawDistance = 2;
 
-  chunkSize = { width: 32, height: 32 };
+  chunkSize = { width: 24, height: 32 };
 
   noFog = false;
 
@@ -15,9 +15,26 @@ export class World extends THREE.Group {
     seed: 0,
     terrain: {
       scale: 40,
-      magnitude: 0.4,
-      offset: 0.2,
+      magnitude: 10,
+      offset: 4,
+      waterOffset: 3
     },
+    trees:{
+      trunk :{
+        minHeight: 8,
+        maxHeight : 12
+      },
+      canopy:{
+        minRadius : 2,
+        maxRadius : 4,
+        density: 0.5
+      },
+      frequency: 0.01
+    },
+    clouds:{
+      scale: 30, 
+      density: 0.5
+    }
   };
 
   dataStore = new DataStore();
@@ -120,7 +137,7 @@ export class World extends THREE.Group {
     for (const chunk of chunksToRemove) {
       chunk.disposeInstance();
       this.remove(chunk);
-      console.log(`Removed chunk at X: ${chunk.userData.x} Z: ${chunk.userData.z}`);
+      // console.log(`Removed chunk at X: ${chunk.userData.x} Z: ${chunk.userData.z}`);
     }
   }
 
@@ -145,7 +162,7 @@ export class World extends THREE.Group {
       chunk.generate();
     }
     this.add(chunk);
-    console.log(`generated chunk ${x}, ${z}`);
+    // console.log(`generated chunk ${x}, ${z}`);
   }
 
   /**

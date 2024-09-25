@@ -18,14 +18,14 @@ export class DataStore{
     get(chunkX, chunkZ, blockX, blockY, blockZ){
         const key = this.getKey(chunkX, chunkZ, blockX, blockY, blockZ);
         const blockId = this.data[key];
-        console.log(`retrieving value ${blockId} to ${key}`); 
+        // console.log(`retrieving value ${blockId} to ${key}`); 
         return blockId
     }
 
     set(chunkX, chunkZ, blockX, blockY, blockZ, blockId){
         const key = this.getKey(chunkX, chunkZ, blockX, blockY, blockZ);
         this.data[key] = blockId;
-        console.log(`Setting key ${key} to ${blockId}`)
+        // console.log(`Setting key ${key} to ${blockId}`)
     }
 
     getKey(chunkX, chunkZ, blockX, blockY, blockZ){

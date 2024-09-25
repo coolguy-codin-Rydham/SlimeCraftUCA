@@ -24,6 +24,7 @@ const orbitCamera = new THREE.PerspectiveCamera(
   window.innerWidth / window.innerHeight
 );
 orbitCamera.position.set(-32, 16, -32);
+orbitCamera.layers.enable(1);
 
 const controls = new OrbitControls(orbitCamera, renderer.domElement);
 controls.target.set(16, 0, 16);
@@ -72,9 +73,9 @@ let previousTime = performance.now();
 function onMouseDown(event) {
   if (player.controls.isLocked && player.selectedCoords) {
     if (player.activeBlockId == blocks.empty.id) {
-        console.log(
-          `Removing Block ar ${JSON.stringify(player.selectedCoords)}`
-        );
+        // console.log(
+        //   `Removing Block ar ${JSON.stringify(player.selectedCoords)}`
+        // );
         world.removeBlock(
           player.selectedCoords.x,
           player.selectedCoords.y,
@@ -82,7 +83,7 @@ function onMouseDown(event) {
         );
     }
     else{
-        console.log(`Add Block at ${JSON.stringify(player.selectedCoords)}`)
+        // console.log(`Add Block at ${JSON.stringify(player.selectedCoords)}`)
         world.addBlock(
             player.selectedCoords.x,
             player.selectedCoords.y,

@@ -38,13 +38,47 @@ export class World extends THREE.Group {
   };
 
   dataStore = new DataStore();
+
   constructor(seed = 0) {
     super();
     this.seed = seed;
+
+    document.addEventListener('keydown',(ev)=>{
+      switch(ev.code){
+        case 'F1':
+          this.save();
+          break;
+        case 'F2':
+          this.load();
+          break;
+      }
+    })
   }
 
-  generate() {
-    this.dataStore.clear();
+  save(){
+    localStorage.setItem('slimecraft_params', JSON.stringify(this.params));
+    localStorage.setItem('slimecraft_data', JSON.stringify(this.dataStore.data));
+    document.getElementById('status').innerHTML = 'GAME SAVED';
+    setTimeout(() => {
+      document.getElementById('status').innerHTML = '';
+    }, 3000);
+  }
+
+  load(){
+    this.params = JSON.parse(localStorage.getItem('slimecraft_params'))
+    this.dataStore.data = JSON.parse(localStorage.getItem('slimecraft_data'))
+    document.getElementById('status').innerHTML = 'GAME LOADED';
+    setTimeout(() => {
+      document.getElementById('status').innerHTML = '';
+    }, 3000);
+    this.generate();
+
+  }
+
+  generate(clearCache = false) {
+    if(clearCache){
+      this.dataStore.clear();
+    }
     this.disposeChunks();
 
     for (let x = -this.drawDistance; x <= this.drawDistance; x++) {

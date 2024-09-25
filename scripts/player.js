@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls";
 import { blocks } from "./blocks";
+import { Tool } from "./tool";
 
 const CENTER_SCREEN = new THREE.Vector2();
 
@@ -25,7 +26,9 @@ export class Player {
 
   raycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(), 0, 3);
   selectedCoords = null;
-  activeBlockId = blocks.grass.id;
+  activeBlockId = blocks.empty.id;
+
+  tool = new Tool();
 
   /**
    *
@@ -37,6 +40,8 @@ export class Player {
     this.camera.layers.enable(1);
     scene.add(this.camera);
     // scene.add(this.cameraHelper);
+
+    this.camera.add(this.tool);
     document.addEventListener("keydown", this.onkeydown.bind(this));
     document.addEventListener("keyup", this.onkeyup.bind(this));
 
@@ -66,6 +71,7 @@ export class Player {
 
   update(world){
     this.updateRaycaster(world);
+    this.tool.update();
   }
 
   /**
@@ -156,8 +162,10 @@ export class Player {
       case "Digit6":
       case "Digit7":
       case "Digit8":
-      case "Digit9":
+        document.getElementById(`toolbar-${this.activeBlockId}`).classList.remove("selected")
         this.activeBlockId=Number(event.key)
+        document.getElementById(`toolbar-${this.activeBlockId}`).classList.add("selected")
+        this.tool.visible = (this.activeBlockId===0)
         console.log(`Active block is: ${event.key}`)
         break;
       case "KeyW":

@@ -1,11 +1,13 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+// import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 import { World } from "./world.js";
 import { createUI } from "./ui.js";
 import { Player } from "./player.js";
 import { Physics } from "./physics.js";
 import { blocks } from "./blocks.js";
+import { ModelLoader } from "./modelLoader.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 const stats = new Stats();
 document.body.append(stats.dom);
@@ -41,6 +43,12 @@ scene.add(world);
 const player = new Player(scene);
 
 const physics = new Physics(scene);
+
+const modelLoader = new ModelLoader();
+modelLoader.loadModels((models)=>{
+    player.tool.setMesh(models.pickaxe);
+})
+
 
 const sun = new THREE.DirectionalLight();
 
@@ -81,6 +89,7 @@ function onMouseDown(event) {
           player.selectedCoords.y,
           player.selectedCoords.z
         );
+        player.tool.startAnimation();
     }
     else{
         // console.log(`Add Block at ${JSON.stringify(player.selectedCoords)}`)

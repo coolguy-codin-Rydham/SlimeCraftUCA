@@ -50,6 +50,6 @@ export function createUI(scene, world, player){
     
     // gui.add(world, 'generate')
     gui.onChange(()=>{
-        world.generate();
+        world.generate(true);
     })
 }

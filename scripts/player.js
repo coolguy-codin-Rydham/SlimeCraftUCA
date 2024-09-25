@@ -269,7 +269,7 @@ export class Player {
         break;
       case 'KeyR':
         if (this.repeat) break;
-        this.position.y = 32;
+        this.position.y = 64;
         this.velocity.set(0, 0, 0);
         break;
       case 'ShiftLeft':

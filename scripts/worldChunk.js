@@ -229,12 +229,16 @@ export class WorldChunk extends THREE.Group {
     const simplex = new SimplexNoise(rng);
     for (let x = 0; x < this.size.width; x++) {
       for (let z = 0; z < this.size.width; z++) {
-        const value = (simplex.noise(
+        // const value = (simplex.noise(
+        //   (this.position.x + x) / this.params.clouds.scale,
+        //   (this.position.z + z) / this.params.clouds.scale
+        // ) + 1) * 0.5;
+        const value = simplex.noise(
           (this.position.x + x) / this.params.clouds.scale,
           (this.position.z + z) / this.params.clouds.scale
-        ) + 1) * 0.5;
+        )
 
-        if (value < this.params.clouds.density) {
+        if (value > this.params.clouds.density) {
           this.setBlockId(x, this.size.height - 1, z, blocks.cloud.id);
         }
       }

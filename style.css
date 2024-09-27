@@ -64,6 +64,25 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+
+  font-size: 2em;
+  color: white;
+  text-align: center;
+}
+
+#overlay2{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #00000080;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
   font-size: 2em;
   color: white;
@@ -76,4 +95,23 @@ h1 {
   left: 8px;
   font-size: 2em;
   color: white;
+}
+
+.uniqi{
+  margin-top: 20px;
+  padding: 10px;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.25rem;
+  /* background-color: rgb(38, 38, 253); */
+  background: linear-gradient(60deg , blue 10%, rgb(63, 63, 238) 40%, rgb(131, 131, 225) 60%);
+
+}
+
+.uniqi>a{
+
+  color: white;
+  text-decoration: none;
 }

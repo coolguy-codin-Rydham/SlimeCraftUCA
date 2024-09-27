@@ -31,12 +31,13 @@
       <div id="instructions">
         
       </div>
+      <button class="uniqi"> <a href="/hell.html">About Us</a></button>
     </div>
     <div id="status"></div>
     <script>
       const fetchData = () => {
           return new Promise((resolve, reject) => {
-              fetch("https://slimecraftuca.onrender.com/data")
+              fetch("http://localhost:3000/data")
                   .then((response) => {
                       if (!response.ok) {
                           reject("Network response was not ok");

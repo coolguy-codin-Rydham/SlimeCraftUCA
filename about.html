@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="/icon.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SLIMECRAFT</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .info{
+        position: absolute;
+        height: 100vh;
+        width: 100vw;
+        z-index: 10;
+        top: 0;
+        left: 0;
+
+        background-color: rgba(0, 0, 0, 0.60);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        line-height: 150%;
+        font-size: 2rem;
+        color:white;
+        
+    }
+    #about{
+      background:linear-gradient(90deg, blue , aqua);
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      color: white;
+      padding: 4px;
+      font-size: 1.25rem;
+      position: absolute;
+      top: 71%;
+      cursor: pointer;
+      left: 50%;
+      transform: translate( -50%, 0);
+    }
+    #about>a{
+      text-decoration: none;
+      color:white
+    }
+  </style>
+</head>
+
+<body>
+    <div class="info">
+        This game is project I have made as a part of<br> UCA WEB DEVELOPMENT. <br>
+        The motive to make this project was simple <br> I felt like I get bored while doing <br> certain stuff so thought of making something <br> everyone could enjoy.
+        <button id="about"><a href="/">Let's go Home</a></button>
+    </div>
+
+   
+
+
+    <script type="module" src="./scripts/main.js"></script>
+</body>
+
+</html>

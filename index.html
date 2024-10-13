@@ -7,6 +7,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SLIMECRAFT</title>
   <link rel="stylesheet" href="./style.css">
+  <style>
+    #about{
+      background:linear-gradient(90deg, blue , aqua);
+      border: none;
+      outline: none;
+      border-radius: 4px;
+      color: white;
+      padding: 4px;
+      font-size: 1.25rem;
+      position: absolute;
+      top: 71%;
+      cursor: pointer;
+      left: 50%;
+      transform: translate( -50%, 0);
+    }
+    #about>a{
+      text-decoration: none;
+      color:white
+    }
+  </style>
 </head>
 
 <body>
@@ -33,10 +53,11 @@
       </div>
     </div>
     <div id="status"></div>
+    <button id="about"><a href="/about.html">About Us</a></button>
     <script>
       const fetchData = () => {
           return new Promise((resolve, reject) => {
-              fetch("https://slimecraftuca.onrender.com/data")
+              fetch("http://localhost:3000/data")
                   .then((response) => {
                       if (!response.ok) {
                           reject("Network response was not ok");

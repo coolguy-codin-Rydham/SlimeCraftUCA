@@ -8,9 +8,9 @@ app.use(cors());
 const data = `<h1>SLIMECRAFT</h1> WASD - Move<br> SHIFT - Sprint<br> SPACE - Jump<br> R - Reset Camera<br> U - Toggle UI 0 - Pickaxe<br> 1-8 - Select Block<br> F1 - Save Game<br> F2 - Load Game<br> F10 - Debug Camera<br><br> <h2>PRESS ANY KEY TO START</h2>
 `;
 app.get("/data", (req, res) => {
+  console.log("Route hit")
     res.json({data:data});
 });
-
 app.get("/", (req, res) => {
     res.redirect("https://slimecraftuca.onrender.com/data");
 });
